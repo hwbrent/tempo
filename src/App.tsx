@@ -77,6 +77,10 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
   );
 }
 
+function getCalendar(): JSX.Element {
+  return null;
+}
+
 function App() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -93,7 +97,13 @@ function App() {
   const completionPctgString = `${completionPctgRounded}%`;
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
-  return table;
+  const calendar = getCalendar();
+  return (
+    <div>
+      <div>{table}</div>
+      <div>{calendar}</div>
+    </div>
+  );
 }
 
 export default App
