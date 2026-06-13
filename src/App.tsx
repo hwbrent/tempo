@@ -101,6 +101,7 @@ function App() {
   return (
     <div>
       <div>{table}</div>
+      <br/>
       <div>{calendar}</div>
     </div>
   );
