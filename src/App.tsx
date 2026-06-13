@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 
-function getWorkDaysInCurrentMonth(): number {
+function getWorkDaysInCurrentMonth(currentDate: Date): number {
   // Figure out the current year and month
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
 
   // Loop through all days of the current month
   let day = 1;
@@ -34,8 +33,11 @@ function getWorkDaysInCurrentMonth(): number {
 }
 
 function App() {
-  const month = new Date().toLocaleString('default', { month: 'long' });
-  const totalWorkDays = getWorkDaysInCurrentMonth();
+  const currentDate = new Date();
+
+  const month = currentDate.toLocaleString('default', { month: 'long' });
+  
+  const totalWorkDays = getWorkDaysInCurrentMonth(currentDate);
   return <p>Total work days in {month}: {totalWorkDays}</p>;
 }
 
