@@ -32,13 +32,15 @@ function getWorkDaysInCurrentMonth(currentDate: Date): number {
   return totalWorkDays;
 }
 
+function getMonthName(currentDate: Date): string {
+  return currentDate.toLocaleString('default', { month: 'long' });
+}
+
 function App() {
   const currentDate = new Date();
-
-  const month = currentDate.toLocaleString('default', { month: 'long' });
-  
+  const monthName = getMonthName(currentDate);
   const totalWorkDays = getWorkDaysInCurrentMonth(currentDate);
-  return <p>Total work days in {month}: {totalWorkDays}</p>;
+  return <p>Total work days in {monthName}: {totalWorkDays}</p>;
 }
 
 export default App
