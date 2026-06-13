@@ -63,10 +63,22 @@ function App() {
   const table = (
     <table>
       <tbody>
-        <tr><td>Total work days in {monthName}</td>         <td>{totalWorkDays}</td></tr>
-        <tr><td>Current day of the month</td>               <td>{dotm}</td></tr>
-        <tr><td>Work days of the month so far</td>          <td>{workDaysUpToToday}</td></tr>
-        <tr><td>Percentage of the work month completed</td> <td>{completionPctgString}</td></tr>
+        <tr>
+          <td>Total work days in {monthName}</td>
+          <td>{totalWorkDays}</td>
+        </tr>
+        <tr>
+          <td>Current day of the month</td>
+          <td>{dotm}</td>
+        </tr>
+        <tr>
+          <td>Work days of the month so far</td>
+          <td>{workDaysUpToToday}</td>
+        </tr>
+        <tr>
+          <td>Percentage of the work month completed</td>
+          <td>{completionPctgString}</td>
+        </tr>
       </tbody>
     </table>
   );
