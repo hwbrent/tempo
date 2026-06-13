@@ -78,7 +78,23 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
 }
 
 function getCalendar(): JSX.Element {
-  return null;
+  return (
+    <table>
+      <thead>
+        <tr>
+          {/* TODO: use i18n/l10n version of day names */}
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  );
 }
 
 function App() {
