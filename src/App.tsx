@@ -52,7 +52,7 @@ function getWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   return workDaysUpToToday.length;
 }
 
-function getTable(dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string): JSX.Element {
+function getTable(dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctg: string): JSX.Element {
   return (
     <table>
       <tbody>
@@ -70,7 +70,7 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
         </tr>
         <tr>
           <td>Percentage of the work month completed</td>
-          <td>{completionPctgString}</td>
+          <td>{completionPctg}</td>
         </tr>
       </tbody>
     </table>
