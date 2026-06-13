@@ -111,12 +111,29 @@ function getCalendar(currentDate: Date): JSX.Element {
 
   const headTr = Object.values(dayNames).map((name) => <th>{name}</th>);
 
+  // ensure all body rows have 7 values
+  for (const row of rows) {
+    for (let i = 0; i < 7; i++) {
+      if (row[i] === undefined) {
+        row[i] = null;
+      }
+    }
+  }
+
+  const bodyTrs = rows.map((row) => (
+    <tr>
+      {row.map((day) => <td>{day ?? null}</td>)}
+    </tr>)
+  );
+
   return (
     <table>
       <thead>
         <tr>{headTr}</tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {bodyTrs}
+      </tbody>
     </table>
   );
 }
