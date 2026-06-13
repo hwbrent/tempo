@@ -52,22 +52,8 @@ function getWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   return workDaysUpToToday.length;
 }
 
-function App() {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const monthName = getMonthName(currentDate);
-  const dotm = currentDate.getDate();
-
-  const monthDays = getCurrentMonthAsWorkDays(currentDate);
-  const totalWorkDays = getTotalWorkDaysInMonth(monthDays);
-
-  const workDaysUpToToday = getWorkDaysUpToDay(monthDays, dotm);
-
-  const completionPctg = (workDaysUpToToday / totalWorkDays) * 100;
-  const completionPctgRounded = completionPctg.toFixed(2);
-  const completionPctgString = `${completionPctgRounded}%`;
-
-  const table = (
+function getTable(dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string): JSX.Element {
+  return (
     <table>
       <tbody>
         <tr>
@@ -89,7 +75,24 @@ function App() {
       </tbody>
     </table>
   );
+}
 
+function App() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const monthName = getMonthName(currentDate);
+  const dotm = currentDate.getDate();
+
+  const monthDays = getCurrentMonthAsWorkDays(currentDate);
+  const totalWorkDays = getTotalWorkDaysInMonth(monthDays);
+
+  const workDaysUpToToday = getWorkDaysUpToDay(monthDays, dotm);
+
+  const completionPctg = (workDaysUpToToday / totalWorkDays) * 100;
+  const completionPctgRounded = completionPctg.toFixed(2);
+  const completionPctgString = `${completionPctgRounded}%`;
+
+  const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
   return table;
 }
 
