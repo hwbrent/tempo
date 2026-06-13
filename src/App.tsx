@@ -106,9 +106,6 @@ function getCalendar(currentDate: Date): JSX.Element {
     day++;
   }
 
-  console.log(rows);
-  console.log(dayNames);
-
   const headTr = Object.values(dayNames).map((name) => <th>{name}</th>);
 
   // ensure all body rows have 7 values
