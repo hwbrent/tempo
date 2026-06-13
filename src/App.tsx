@@ -39,6 +39,13 @@ function getMonthName(currentDate: Date): string {
   return currentDate.toLocaleString('default', { month: 'long' });
 }
 
+function getWorkDaysUpToDay(monthDays: { [key: number]: boolean }, dotm: number): number {
+  const days = Object.entries(monthDays);
+  const workDays = days.filter(([day, isWorkDay]) => isWorkDay);
+  const workDaysUpToToday = workDays.filter(([day]) => Number(day) <= dotm);
+  return workDaysUpToToday.length;
+}
+
 function App() {
   const currentDate = new Date();
   const monthName = getMonthName(currentDate);
@@ -46,10 +53,14 @@ function App() {
 
   const monthDays = getCurrentMonthAsWorkDays(currentDate);
   const totalWorkDays = getTotalWorkDaysInMonth(monthDays);
+
+  const workDaysUpToToday = getWorkDaysUpToDay(monthDays, dotm);
+
   return (
     <div>
       <p>Total work days in {monthName}: {totalWorkDays}</p>
       <p>Current day of the month: {dotm}</p>
+      <p>Work days of the month so far: {workDaysUpToToday}</p>
     </div>
   );
 }
