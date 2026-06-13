@@ -77,7 +77,34 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
   );
 }
 
-function getCalendar(): JSX.Element {
+function getCalendar(currentDate: Date): JSX.Element {
+  const rows = [{}];
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  let day = 1;
+  while (true) {
+    const thisDate = new Date(year, month, day);
+    const thisMonth = thisDate.getMonth();
+    if (thisMonth !== month) {
+      break;
+    }
+
+    const dotw = thisDate.getDay();
+
+    if (dotw === 0) {
+      // start new row
+      rows.push({});
+    }
+
+    const row = rows.at(-1);
+    row[dotw] = day;
+
+    day++;
+  }
+
+  console.log(rows);
+
   return (
     <table>
       <thead>
@@ -113,7 +140,7 @@ function App() {
   const completionPctgString = `${completionPctgRounded}%`;
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
-  const calendar = getCalendar();
+  const calendar = getCalendar(currentDate);
   return (
     <div>
       <div>{table}</div>
