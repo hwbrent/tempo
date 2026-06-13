@@ -40,7 +40,13 @@ function App() {
   const currentDate = new Date();
   const monthName = getMonthName(currentDate);
   const totalWorkDays = getWorkDaysInCurrentMonth(currentDate);
-  return <p>Total work days in {monthName}: {totalWorkDays}</p>;
+  const dotm = currentDate.getDate();
+  return (
+    <div>
+      <p>Total work days in {monthName}: {totalWorkDays}</p>
+      <p>Current day of the month: {dotm}</p>
+    </div>
+  );
 }
 
 export default App
