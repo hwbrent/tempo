@@ -109,19 +109,12 @@ function getCalendar(currentDate: Date): JSX.Element {
   console.log(rows);
   console.log(dayNames);
 
+  const headTr = Object.values(dayNames).map((name) => <th>{name}</th>);
+
   return (
     <table>
       <thead>
-        <tr>
-          {/* TODO: use i18n/l10n version of day names */}
-          <th>Monday</th>
-          <th>Tuesday</th>
-          <th>Wednesday</th>
-          <th>Thursday</th>
-          <th>Friday</th>
-          <th>Saturday</th>
-          <th>Sunday</th>
-        </tr>
+        <tr>{headTr}</tr>
       </thead>
       <tbody></tbody>
     </table>
