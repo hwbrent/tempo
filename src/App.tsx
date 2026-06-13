@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import './App.css'
 
-function getCurrentMonthAsWorkDays(currentDate: Date): { [key: number]: boolean } {
+/**
+ * @summary An object representing a month, where the keys are the day of the month, and
+ * the values indicate whether that day is a workday
+ */
+type MonthDays = { [key: number]: boolean };
+
+function getCurrentMonthAsWorkDays(currentDate: Date): MonthDays {
   const monthDays = {};
 
   // Figure out the current year and month
@@ -31,7 +37,7 @@ function getCurrentMonthAsWorkDays(currentDate: Date): { [key: number]: boolean 
   return monthDays;
 }
 
-function getTotalWorkDaysInMonth(monthDays: { [key: number]: boolean }): number {
+function getTotalWorkDaysInMonth(monthDays: MonthDays): number {
   return Object.values(monthDays).filter(Boolean).length;
 }
 
@@ -39,7 +45,7 @@ function getMonthName(currentDate: Date): string {
   return currentDate.toLocaleString('default', { month: 'long' });
 }
 
-function getWorkDaysUpToDay(monthDays: { [key: number]: boolean }, dotm: number): number {
+function getWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   const days = Object.entries(monthDays);
   const workDays = days.filter(([day, isWorkDay]) => isWorkDay);
   const workDaysUpToToday = workDays.filter(([day]) => Number(day) <= dotm);
