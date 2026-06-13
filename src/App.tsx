@@ -56,11 +56,15 @@ function App() {
 
   const workDaysUpToToday = getWorkDaysUpToDay(monthDays, dotm);
 
+  const completionPctg = (workDaysUpToToday / totalWorkDays) * 100;
+  const completionPctgRounded = completionPctg.toFixed(2);
+
   return (
     <div>
       <p>Total work days in {monthName}: {totalWorkDays}</p>
       <p>Current day of the month: {dotm}</p>
       <p>Work days of the month so far: {workDaysUpToToday}</p>
+      <p>Percentage of the work month completed: {completionPctgRounded}%</p>
     </div>
   );
 }
