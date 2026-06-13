@@ -122,7 +122,7 @@ function getCalendar(currentDate: Date): JSX.Element {
 
   const bodyTrs = rows.map((row) => (
     <tr>
-      {row.map((day) => <td>{day ?? null}</td>)}
+      {row.map((day) => <td>{day}</td>)}
     </tr>)
   );
 
