@@ -48,7 +48,7 @@ function getMonthName(currentDate: Date): string {
 function getWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   const days = Object.entries(monthDays);
   const workDays = days.filter((day) => day[1]);
-  const workDaysUpToToday = workDays.filter(([day]) => Number(day) <= dotm);
+  const workDaysUpToToday = workDays.filter(([dayNumber]) => Number(dayNumber) <= dotm);
   return workDaysUpToToday.length;
 }
 
