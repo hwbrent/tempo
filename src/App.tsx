@@ -78,7 +78,7 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
 }
 
 function getCalendar(currentDate: Date): JSX.Element {
-  const rows = [{}];
+  const rows = [[]];
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -94,7 +94,7 @@ function getCalendar(currentDate: Date): JSX.Element {
 
     if (dotw === 0) {
       // start new row
-      rows.push({});
+      rows.push([]);
     }
 
     const row = rows.at(-1);
