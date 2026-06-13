@@ -54,6 +54,7 @@ function getWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
 
 function App() {
   const currentDate = new Date();
+  const year = currentDate.getFullYear();
   const monthName = getMonthName(currentDate);
   const dotm = currentDate.getDate();
 
@@ -70,16 +71,12 @@ function App() {
     <table>
       <tbody>
         <tr>
-          <td>Current month</td>
-          <td>{monthName}</td>
+          <td>Today's date</td>
+          <td>{dotm} {monthName} {year}</td>
         </tr>
         <tr>
           <td>Total work days in {monthName}</td>
           <td>{totalWorkDays}</td>
-        </tr>
-        <tr>
-          <td>Current day of the month</td>
-          <td>{dotm}</td>
         </tr>
         <tr>
           <td>Work days of the month so far</td>
