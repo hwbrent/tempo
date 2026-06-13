@@ -70,6 +70,10 @@ function App() {
     <table>
       <tbody>
         <tr>
+          <td>Current month</td>
+          <td>{monthName}</td>
+        </tr>
+        <tr>
           <td>Total work days in {monthName}</td>
           <td>{totalWorkDays}</td>
         </tr>
