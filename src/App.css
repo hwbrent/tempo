@@ -4,7 +4,6 @@
   --calendar-day-weekend: #fde68a;
   --calendar-day-past: #9ca3af;
   --calendar-day-today-bg: #aa3bff;
-  --calendar-day-today-text: #ffffff;
   --calendar-day-future: #2f2938;
   /* --calendar-day-not-in-month: #cbd5e1; */
 }
@@ -16,7 +15,6 @@
     --calendar-day-weekend: #7c2d12;
     --calendar-day-past: #9ca3af;
     --calendar-day-today-bg: #c084fc;
-    --calendar-day-today-text: #111827;
     --calendar-day-future: #f3f4f6;
     /* --calendar-day-not-in-month: #4b5563; */
   }
@@ -52,8 +50,7 @@
 }
 
 .calendar-day.today {
-  background-color: var(--calendar-day-today-bg);
-  color: var(--calendar-day-today-text);
+  border: 0.2375rem solid var(--calendar-day-today-bg);
 }
 
 .calendar-day.future {
