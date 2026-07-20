@@ -94,7 +94,7 @@ function getCalendar(currentDate: Date): JSX.Element {
 
     const dotw = thisDate.getDay();
 
-    dayNames[dotw] = thisDate.toLocaleString('default', { weekday: 'long' });
+    dayNames[dotw] = thisDate.toLocaleString('default', { weekday: 'short' });
 
     if (dotw === 0) {
       // start new row
