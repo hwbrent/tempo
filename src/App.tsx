@@ -7,6 +7,8 @@ import './App.css'
  */
 type MonthDays = { [key: number]: boolean };
 
+const roundPercentage = (num: number) => Number(num.toFixed(1));
+
 function getCurrentMonthAsWorkDays(currentDate: Date): MonthDays {
   const monthDays = {};
 
@@ -52,7 +54,8 @@ function getTotalWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   return workDaysUpToToday.length;
 }
 
-function getTable(dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctg: string): JSX.Element {
+function Table(props: {dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string}): JSX.Element {
+  const { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString } = props;
   return (
     <table>
       <tbody>
@@ -70,8 +73,124 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
         </tr>
         <tr>
           <td>Percentage of the work month completed</td>
-          <td>{completionPctg}</td>
+          <td>{completionPctgString}</td>
         </tr>
+      </tbody>
+    </table>
+  );
+}
+
+function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
+  const { currentDate, totalWorkDays } = props;
+
+  // whether to show percentages or the day number in the calendar cell
+  const [showPercentage, setShowPercentage] = useState(false);
+
+  // map the dotw number to the name of that dotw
+  const dayNames: {[dayName: number]: string} = {};
+
+  const rows = [[]];
+
+  const currentDay = currentDate.getDate();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  let day = 1;
+  while (true) {
+    const thisDate = new Date(year, month, day);
+    const thisMonth = thisDate.getMonth();
+    if (thisMonth !== month) {
+      break;
+    }
+
+    const dotw = thisDate.getDay();
+
+    dayNames[dotw] = thisDate.toLocaleString('default', { weekday: 'short' });
+
+    if (dotw === 0) {
+      // start new row
+      rows.push([]);
+    }
+
+    const row = rows.at(-1);
+    row[dotw] = day;
+
+    day++;
+  }
+
+  const headTr = Object.values(dayNames).map((name) => <th>{name}</th>);
+
+  // ensure all body rows have 7 values
+  for (const row of rows) {
+    for (let i = 0; i < 7; i++) {
+      if (row[i] === undefined) {
+        row[i] = null;
+      }
+    }
+  }
+
+  // Create <tr> and <td>s within for each week and day of the month
+  let weekendsSeen = 0;
+  const bodyTrs = rows.map((row) => {
+    return (
+      <tr>
+        {row.map((day, index) => {
+          let className = 'calendar-day';
+
+          const isWeekend = index === 0 || index === 6;
+
+          // mark weekends
+          if (isWeekend) {
+            className += ' weekend';
+            weekendsSeen++;
+          }
+
+          // mark whether day is past/present/future
+          if (day < currentDay) {
+            className += ' past';
+          } else if (day === currentDay) {
+            className += ' today';
+          } else {
+            className += ' future';
+          }
+
+          // mark day not in this month
+          if (day === null) {
+            className += ' not-in-month';
+          }
+
+          // toggle
+          const onClick = () => setShowPercentage(!showPercentage);
+
+          // decide what to show in the calendar cell
+          let contents;
+          let tooltip;
+          if (showPercentage) {
+            // show the percentage that will have been completed by the end of the day,
+            // unless it's a weekend (would be pointless)
+            const workdayNumber = day - weekendsSeen + 1;
+            const pctg = (workdayNumber/totalWorkDays) * 100;
+            const pctgRounded = roundPercentage(pctg);
+            contents = isWeekend ? '' : `${pctgRounded}%`;
+            tooltip = 'The percentage that will have been completed by the end of the day';
+          } else {
+            // just show the vanilla day number
+            contents = day;
+          }
+
+          const tdProps = { className, onClick, title: tooltip };
+          return <td {...tdProps}>{contents}</td>
+        })}
+      </tr>
+    )
+  });
+
+  return (
+    <table>
+      <thead>
+        <tr>{headTr}</tr>
+      </thead>
+      <tbody>
+        {bodyTrs}
       </tbody>
     </table>
   );
@@ -89,11 +208,17 @@ function App() {
   const workDaysUpToToday = getTotalWorkDaysUpToDay(monthDays, dotm);
 
   const completionPctg = (workDaysUpToToday / totalWorkDays) * 100;
-  const completionPctgRounded = completionPctg.toFixed(2);
+  const completionPctgRounded = roundPercentage(completionPctg);
   const completionPctgString = `${completionPctgRounded}%`;
 
-  const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
-  return table;
+  const tableProps = { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString };
+  const calendarProps = { currentDate, totalWorkDays };
+  return (
+    <div id='app'>
+      <Table {...tableProps} />
+      <Calendar {...calendarProps} />
+    </div>
+  );
 }
 
 export default App
