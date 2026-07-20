@@ -152,13 +152,7 @@ function App() {
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
   const calendar = getCalendar(currentDate);
-  return (
-    <div>
-      <div>{table}</div>
-      <br/>
-      <div>{calendar}</div>
-    </div>
-  );
+  return <div id='app'>{table}{calendar}</div>;
 }
 
 export default App
