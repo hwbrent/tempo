@@ -38,6 +38,9 @@
 
 .calendar-day.weekend {
   background-color: var(--calendar-day-weekend);
+
+  /* dont allow to be overridden by .future */
+  color: var(--calendar-day-past) !important;
 }
 
 .calendar-day.past {
