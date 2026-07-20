@@ -6,7 +6,7 @@
   --calendar-day-today-bg: #aa3bff;
   --calendar-day-today-text: #ffffff;
   --calendar-day-future: #2f2938;
-  --calendar-day-not-in-month: #cbd5e1;
+  /* --calendar-day-not-in-month: #cbd5e1; */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,7 +18,7 @@
     --calendar-day-today-bg: #c084fc;
     --calendar-day-today-text: #111827;
     --calendar-day-future: #f3f4f6;
-    --calendar-day-not-in-month: #4b5563;
+    /* --calendar-day-not-in-month: #4b5563; */
   }
 }
 
@@ -54,6 +54,5 @@
 }
 
 .calendar-day.not-in-month {
-  color: var(--calendar-day-not-in-month);
-  opacity: 0.75;
+  visibility: hidden;
 }
