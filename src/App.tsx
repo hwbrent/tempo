@@ -54,7 +54,7 @@ function getTotalWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   return workDaysUpToToday.length;
 }
 
-function Table(props: {dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string}): JSX.Element {
+function Card(props: {dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string}): JSX.Element {
   const { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString } = props;
   return (
     <table>
@@ -215,7 +215,7 @@ function App() {
   const calendarProps = { currentDate, totalWorkDays };
   return (
     <div id='app'>
-      <Table {...tableProps} />
+      <Card {...tableProps} />
       <Calendar {...calendarProps} />
     </div>
   );
