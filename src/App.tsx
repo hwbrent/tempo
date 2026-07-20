@@ -177,7 +177,8 @@ function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Elemen
             contents = day;
           }
 
-          return <td className={className} onClick={onClick} title={title}>{contents}</td>
+          const tdProps = { className, onClick, title };
+          return <td {...tdProps}>{contents}</td>
         })}
       </tr>
     )
