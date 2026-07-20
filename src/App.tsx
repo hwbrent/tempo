@@ -54,7 +54,8 @@ function getTotalWorkDaysUpToDay(monthDays: MonthDays, dotm: number): number {
   return workDaysUpToToday.length;
 }
 
-function getTable(dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctg: string): JSX.Element {
+function Table(props: {dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string}): JSX.Element {
+  const { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString } = props;
   return (
     <table>
       <tbody>
@@ -72,7 +73,7 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
         </tr>
         <tr>
           <td>Percentage of the work month completed</td>
-          <td>{completionPctg}</td>
+          <td>{completionPctgString}</td>
         </tr>
       </tbody>
     </table>
@@ -205,7 +206,8 @@ function App() {
   const completionPctgRounded = roundPercentage(completionPctg);
   const completionPctgString = `${completionPctgRounded}%`;
 
-  const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
+  const tableProps = { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString };
+  const table = <Table {...tableProps} />;
   const calendar = <Calendar currentDate={currentDate} totalWorkDays={totalWorkDays} />;
   return <div id='app'>{table}{calendar}</div>;
 }
