@@ -86,7 +86,9 @@ function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Elemen
   // whether to show percentages or the day number in the calendar cell
   const [showPercentage, setShowPercentage] = useState(false);
 
-  const dayNames = {};
+  // map the dotw number to the name of that dotw
+  const dayNames: {[dayName: number]: string} = {};
+
   const rows = [[]];
 
   const currentDay = currentDate.getDate();
