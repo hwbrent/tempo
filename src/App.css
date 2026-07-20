@@ -32,6 +32,12 @@
   padding: 0.35rem 0.45rem;
 }
 
+#card td {
+  border: 1px solid var(--calendar-day-border);
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.45rem;
+}
+
 .calendar-day {
   background-color: var(--calendar-day-bg);
   border: 1px solid var(--calendar-day-border);
