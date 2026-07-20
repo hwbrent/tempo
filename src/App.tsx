@@ -81,6 +81,7 @@ function getCalendar(currentDate: Date): JSX.Element {
   const dayNames = {};
   const rows = [[]];
 
+  const currentDay = currentDate.getDate();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   let day = 1;
@@ -119,7 +120,30 @@ function getCalendar(currentDate: Date): JSX.Element {
 
   const bodyTrs = rows.map((row) => (
     <tr>
-      {row.map((day) => <td>{day}</td>)}
+      {row.map((day) => {
+        let className = 'calendar-day';
+
+        // mark weekends
+        if (day === 0 || day === 6) {
+          className += ' weekend';
+        }
+
+        // mark whether day is past/present/future
+        if (day < currentDay) {
+          className += ' past';
+        } else if (day === currentDay) {
+          className += ' today';
+        } else {
+          className += ' future';
+        }
+
+        // mark day not in this month
+        if (day === null) {
+          className += ' not-in-month';
+        }
+
+        return <td className={className}>{day}</td>
+      })}
     </tr>)
   );
 
