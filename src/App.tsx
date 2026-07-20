@@ -79,7 +79,9 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
   );
 }
 
-function Calendar(currentDate: Date, totalWorkDays: number): JSX.Element {
+function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
+  const { currentDate, totalWorkDays } = props;
+
   // whether to show percentages or the day number in the calendar cell
   const [showPercentage, setShowPercentage] = useState(false);
 
@@ -204,7 +206,7 @@ function App() {
   const completionPctgString = `${completionPctgRounded}%`;
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
-  const calendar = Calendar(currentDate, totalWorkDays);
+  const calendar = <Calendar currentDate={currentDate} totalWorkDays={totalWorkDays} />;
   return <div id='app'>{table}{calendar}</div>;
 }
 
