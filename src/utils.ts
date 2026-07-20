@@ -1,7 +1,7 @@
 import type { MonthDays } from './types';
 
-export function roundPercentage(num: number) {
-    return Number(num.toFixed(1));
+export function roundPercentage(percentage: number) {
+    return Number(percentage.toFixed(1));
 }
 
 export function getCurrentMonthAsWorkDays(currentDate: Date): MonthDays {
