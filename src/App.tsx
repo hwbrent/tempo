@@ -77,7 +77,10 @@ function getTable(dotm: number, monthName: string, year: number, totalWorkDays: 
   );
 }
 
-function getCalendar(currentDate: Date): JSX.Element {
+function Calendar(currentDate: Date, totalWorkDays: number): JSX.Element {
+  // whether to show percentages or the day number in the calendar cell
+  const [showPercentage, setShowPercentage] = useState(false);
+
   const dayNames = {};
   const rows = [[]];
 
@@ -118,34 +121,57 @@ function getCalendar(currentDate: Date): JSX.Element {
     }
   }
 
-  const bodyTrs = rows.map((row) => (
-    <tr>
-      {row.map((day, index) => {
-        let className = 'calendar-day';
+  // Create <tr> and <td>s within for each week and day of the month
+  let weekendsSeen = 0;
+  const bodyTrs = rows.map((row) => {
+    return (
+      <tr>
+        {row.map((day, index) => {
+          let className = 'calendar-day';
 
-        // mark weekends
-        if (index === 0 || index === 6) {
-          className += ' weekend';
-        }
+          const isWeekend = index === 0 || index === 6;
 
-        // mark whether day is past/present/future
-        if (day < currentDay) {
-          className += ' past';
-        } else if (day === currentDay) {
-          className += ' today';
-        } else {
-          className += ' future';
-        }
+          // mark weekends
+          if (isWeekend) {
+            className += ' weekend';
+            weekendsSeen++;
+          }
 
-        // mark day not in this month
-        if (day === null) {
-          className += ' not-in-month';
-        }
+          // mark whether day is past/present/future
+          if (day < currentDay) {
+            className += ' past';
+          } else if (day === currentDay) {
+            className += ' today';
+          } else {
+            className += ' future';
+          }
 
-        return <td className={className}>{day}</td>
-      })}
-    </tr>)
-  );
+          // mark day not in this month
+          if (day === null) {
+            className += ' not-in-month';
+          }
+
+          // toggle
+          const onClick = () => setShowPercentage(!showPercentage);
+
+          let contents;
+          if (showPercentage) {
+            // show the percentage that will have been completed by the end of the day
+            let workdayNumber = day - weekendsSeen;
+            workdayNumber++;
+            const pctg = (workdayNumber/totalWorkDays) * 100;
+            const pctgRounded = pctg.toFixed(1);
+            contents = isWeekend ? '' : `${pctgRounded}%`;
+          } else {
+            // just show the vanilla day number
+            contents = day;
+          }
+
+          return <td className={className} onClick={onClick}>{contents}</td>
+        })}
+      </tr>
+    )
+  });
 
   return (
     <table>
@@ -175,7 +201,7 @@ function App() {
   const completionPctgString = `${completionPctgRounded}%`;
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
-  const calendar = getCalendar(currentDate);
+  const calendar = Calendar(currentDate, totalWorkDays);
   return <div id='app'>{table}{calendar}</div>;
 }
 

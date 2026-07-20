@@ -40,6 +40,9 @@
   /* dont allow to be overridden by .future */
   color: var(--calendar-day-past) !important;
 }
+.calendar-day:not(.weekend) {
+  cursor: pointer;
+}
 
 .calendar-day.past {
   color: var(--calendar-day-past);
