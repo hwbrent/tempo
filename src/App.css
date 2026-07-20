@@ -32,6 +32,7 @@
   border-radius: 0.4rem;
   color: var(--calendar-day-future);
   padding: 0.35rem 0.45rem;
+  cursor: pointer;
 }
 
 .calendar-day.weekend {
@@ -39,9 +40,6 @@
 
   /* dont allow to be overridden by .future */
   color: var(--calendar-day-past) !important;
-}
-.calendar-day:not(.weekend) {
-  cursor: pointer;
 }
 
 .calendar-day.past {
