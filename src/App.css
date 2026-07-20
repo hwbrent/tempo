@@ -48,7 +48,7 @@
 }
 .calendar-day.past:not(.weekend) {
   /* https://stackoverflow.com/a/30377346 */
-  background-image: linear-gradient(to bottom right,  transparent calc(50% - 1px), red, transparent calc(50% + 1px));
+  background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), red, transparent calc(50% + 1px));
 }
 
 .calendar-day.today {
