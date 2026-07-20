@@ -207,9 +207,13 @@ function App() {
   const completionPctgString = `${completionPctgRounded}%`;
 
   const tableProps = { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString };
-  const table = <Table {...tableProps} />;
-  const calendar = <Calendar currentDate={currentDate} totalWorkDays={totalWorkDays} />;
-  return <div id='app'>{table}{calendar}</div>;
+  const calendarProps = { currentDate, totalWorkDays };
+  return (
+    <div id='app'>
+      <Table {...tableProps} />
+      <Calendar {...calendarProps} />
+    </div>
+  );
 }
 
 export default App
