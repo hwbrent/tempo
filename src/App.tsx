@@ -163,7 +163,7 @@ function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Elemen
 
           // decide what to show in the calendar cell
           let contents;
-          let title;
+          let tooltip;
           if (showPercentage) {
             // show the percentage that will have been completed by the end of the day,
             // unless it's a weekend (would be pointless)
@@ -171,13 +171,13 @@ function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Elemen
             const pctg = (workdayNumber/totalWorkDays) * 100;
             const pctgRounded = roundPercentage(pctg);
             contents = isWeekend ? '' : `${pctgRounded}%`;
-            title = 'The percentage that will have been completed by the end of the day';
+            tooltip = 'The percentage that will have been completed by the end of the day';
           } else {
             // just show the vanilla day number
             contents = day;
           }
 
-          const tdProps = { className, onClick, title };
+          const tdProps = { className, onClick, title: tooltip };
           return <td {...tdProps}>{contents}</td>
         })}
       </tr>
