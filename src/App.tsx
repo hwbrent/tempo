@@ -156,11 +156,12 @@ function Calendar(currentDate: Date, totalWorkDays: number): JSX.Element {
           // toggle
           const onClick = () => setShowPercentage(!showPercentage);
 
+          // decide what to show in the calendar cell
           let contents;
           if (showPercentage) {
-            // show the percentage that will have been completed by the end of the day
-            let workdayNumber = day - weekendsSeen;
-            workdayNumber++;
+            // show the percentage that will have been completed by the end of the day,
+            // unless it's a weekend (would be pointless)
+            const workdayNumber = day - weekendsSeen + 1;
             const pctg = (workdayNumber/totalWorkDays) * 100;
             const pctgRounded = roundPercentage(pctg);
             contents = isWeekend ? '' : `${pctgRounded}%`;
