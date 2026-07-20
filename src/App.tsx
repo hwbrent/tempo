@@ -7,6 +7,8 @@ import './App.css'
  */
 type MonthDays = { [key: number]: boolean };
 
+const roundPercentage = (num: number) => Number(num.toFixed(1));
+
 function getCurrentMonthAsWorkDays(currentDate: Date): MonthDays {
   const monthDays = {};
 
@@ -160,7 +162,7 @@ function Calendar(currentDate: Date, totalWorkDays: number): JSX.Element {
             let workdayNumber = day - weekendsSeen;
             workdayNumber++;
             const pctg = (workdayNumber/totalWorkDays) * 100;
-            const pctgRounded = pctg.toFixed(1);
+            const pctgRounded = roundPercentage(pctg);
             contents = isWeekend ? '' : `${pctgRounded}%`;
           } else {
             // just show the vanilla day number
@@ -197,7 +199,7 @@ function App() {
   const workDaysUpToToday = getTotalWorkDaysUpToDay(monthDays, dotm);
 
   const completionPctg = (workDaysUpToToday / totalWorkDays) * 100;
-  const completionPctgRounded = completionPctg.toFixed(2);
+  const completionPctgRounded = roundPercentage(completionPctg);
   const completionPctgString = `${completionPctgRounded}%`;
 
   const table = getTable(dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString);
