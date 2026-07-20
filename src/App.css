@@ -43,6 +43,10 @@
 .calendar-day.past {
   color: var(--calendar-day-past);
 }
+.calendar-day.past:not(.weekend) {
+  /* https://stackoverflow.com/a/30377346 */
+  background-image: linear-gradient(to bottom right,  transparent calc(50% - 1px), red, transparent calc(50% + 1px));
+}
 
 .calendar-day.today {
   background-color: var(--calendar-day-today-bg);
