@@ -120,11 +120,11 @@ function getCalendar(currentDate: Date): JSX.Element {
 
   const bodyTrs = rows.map((row) => (
     <tr>
-      {row.map((day) => {
+      {row.map((day, index) => {
         let className = 'calendar-day';
 
         // mark weekends
-        if (day === 0 || day === 6) {
+        if (index === 0 || index === 6) {
           className += ' weekend';
         }
 
