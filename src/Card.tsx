@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 export function Card(props: {dotm: number, monthName: string, year: number, totalWorkDays: number, workDaysUpToToday: number, completionPctgString: string}): JSX.Element {
   const { dotm, monthName, year, totalWorkDays, workDaysUpToToday, completionPctgString } = props;
   const rows = [

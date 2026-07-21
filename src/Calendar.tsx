@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { roundPercentage } from './utils';
 
+import type { JSX } from 'react';
+
 export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
   const { currentDate, totalWorkDays } = props;
 
