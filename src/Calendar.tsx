@@ -3,14 +3,30 @@ import { roundPercentage } from './utils';
 
 import type { JSX } from 'react';
 
+/** @returns Ordered array of the short names of the days of the week (Sunday first) */
+function getDayNames(): string[] {
+  const WEEK_LENGTH = 7; // no way
+
+  // map the dotw number to the name of that dotw
+  const dayNames: string[] = new Array(WEEK_LENGTH);
+
+  // generate 7 dates (one for each dotw) to get their names
+  const rightNow = new Date();
+  for (let i = 0; i < WEEK_LENGTH; i++) {
+    const date = new Date(rightNow.getFullYear(), rightNow.getMonth(), i);
+    const index = date.getDay();
+    const name = date.toLocaleString('default', { weekday: 'short' });
+    dayNames[index] = name;
+  }
+
+  return dayNames;
+}
+
 export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
   const { currentDate, totalWorkDays } = props;
 
   // whether to show percentages or the day number in the calendar cell
   const [showPercentage, setShowPercentage] = useState(false);
-
-  // map the dotw number to the name of that dotw
-  const dayNames: {[dayName: number]: string} = {};
 
   // the various rows (weeks) in the calendar view
   const rows: Array<Array<number|null|undefined>> = [[]];
@@ -28,8 +44,6 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
 
     const dotw = thisDate.getDay();
 
-    dayNames[dotw] = thisDate.toLocaleString('default', { weekday: 'short' });
-
     if (dotw === 0) {
       // start new row
       rows.push([]);
@@ -40,8 +54,6 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
 
     day++;
   }
-
-  const headTr = Object.values(dayNames).map((name) => <th>{name}</th>);
 
   // ensure all body rows have 7 values
   for (const row of rows) {
@@ -107,6 +119,8 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
       </tr>
     )
   });
+
+  const headTr = getDayNames().map((name) => <th>{name}</th>);
 
   return (
     <table id='calendar'>
