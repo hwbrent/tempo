@@ -12,7 +12,8 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
   // map the dotw number to the name of that dotw
   const dayNames: {[dayName: number]: string} = {};
 
-  const rows = [[]];
+  // the various rows (weeks) in the calendar view
+  const rows: Array<Array<number|null|undefined>> = [[]];
 
   const currentDay = currentDate.getDate();
   const year = currentDate.getFullYear();
@@ -35,7 +36,7 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
     }
 
     const row = rows.at(-1);
-    row[dotw] = day;
+    if (row) row[dotw] = day;
 
     day++;
   }
@@ -68,7 +69,7 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
           }
 
           // mark whether day is past/present/future
-          if (day < currentDay) {
+          if (day && day < currentDay) {
             className += ' past';
           } else if (day === currentDay) {
             className += ' today';
@@ -90,7 +91,7 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
           if (showPercentage) {
             // show the percentage that will have been completed by the end of the day,
             // unless it's a weekend (would be pointless)
-            const workdayNumber = day - weekendsSeen + 1;
+            const workdayNumber = Number(day) - weekendsSeen + 1;
             const pctg = (workdayNumber/totalWorkDays) * 100;
             const pctgRounded = roundPercentage(pctg);
             contents = isWeekend ? '' : `${pctgRounded}%`;

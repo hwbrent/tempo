@@ -5,7 +5,7 @@ export function roundPercentage(percentage: number) {
 }
 
 export function getCurrentMonthAsWorkDays(currentDate: Date): MonthDays {
-  const monthDays = {};
+  const monthDays: MonthDays = {};
 
   // Figure out the current year and month
   const year = currentDate.getFullYear();
