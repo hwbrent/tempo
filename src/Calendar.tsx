@@ -22,6 +22,14 @@ function getDayNames(): string[] {
   return dayNames;
 }
 
+function getDayNameTds(): JSX.Element[] {
+  return getDayNames().map((name) => <th>{name}</th>);
+}
+
+function getTHeadTr(): JSX.Element {
+  return <tr>{getDayNameTds()}</tr>;
+}
+
 export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
   const { currentDate, totalWorkDays } = props;
 
@@ -120,12 +128,10 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
     )
   });
 
-  const headTr = getDayNames().map((name) => <th>{name}</th>);
-
   return (
     <table id='calendar'>
       <thead>
-        <tr>{headTr}</tr>
+        {getTHeadTr()}
       </thead>
       <tbody>
         {bodyTrs}
