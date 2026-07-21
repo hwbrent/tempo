@@ -30,51 +30,58 @@ function getTHeadTr(): JSX.Element {
   return <tr>{getDayNameTds()}</tr>;
 }
 
+function getWeeks(currentDate: Date): (number|null)[][] {
+  const weeks: (number|null)[][] = [];
+
+  // https://www.geeksforgeeks.org/javascript/how-to-get-the-number-of-days-in-a-specified-month-using-javascript/
+  const numberOfDaysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+  // add every day of the month to the appropriate week array
+  for (let day = 1; day <= numberOfDaysInMonth; day++) {
+    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const dotw = date.getDay();
+
+    // start new week
+    if (dotw === 0 || weeks.length === 0) {
+      weeks.push([]);
+    }
+
+    const week = weeks.at(-1);
+    if (week) week[dotw] = day;
+  }
+
+  // the first and last weeks may have empty space, so fill them with null
+  const firstWeek = weeks[0] ?? [];
+  const lastWeek = weeks.at(-1) ?? [];
+  for (const [index, day] of firstWeek.entries()) {
+    if (day !== undefined) {
+      break
+    }
+    firstWeek[index] = null;
+  }
+  for (const [index, day] of lastWeek.toReversed().entries()) {
+    if (day !== undefined) {
+      break
+    }
+    lastWeek[index] = null;
+  }
+
+  return weeks;
+}
+
 export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX.Element {
   const { currentDate, totalWorkDays } = props;
 
   // whether to show percentages or the day number in the calendar cell
   const [showPercentage, setShowPercentage] = useState(false);
 
-  // the various rows (weeks) in the calendar view
-  const rows: Array<Array<number|null|undefined>> = [[]];
-
   const currentDay = currentDate.getDate();
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  let day = 1;
-  while (true) {
-    const thisDate = new Date(year, month, day);
-    const thisMonth = thisDate.getMonth();
-    if (thisMonth !== month) {
-      break;
-    }
 
-    const dotw = thisDate.getDay();
-
-    if (dotw === 0) {
-      // start new row
-      rows.push([]);
-    }
-
-    const row = rows.at(-1);
-    if (row) row[dotw] = day;
-
-    day++;
-  }
-
-  // ensure all body rows have 7 values
-  for (const row of rows) {
-    for (let i = 0; i < 7; i++) {
-      if (row[i] === undefined) {
-        row[i] = null;
-      }
-    }
-  }
+  const weeks = getWeeks(currentDate);
 
   // Create <tr> and <td>s within for each week and day of the month
   let weekendsSeen = 0;
-  const bodyTrs = rows.map((row) => {
+  const bodyTrs = weeks.map((row) => {
     return (
       <tr>
         {row.map((day, index) => {
