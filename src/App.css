@@ -76,3 +76,9 @@
 .calendar-day.not-in-month {
   visibility: hidden;
 }
+
+.explain {
+  font-style: italic;
+  text-decoration: underline;
+  cursor: help;
+}
