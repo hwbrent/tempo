@@ -80,7 +80,7 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
   const weeks = getWeeks(currentDate);
 
   // Create <tr> and <td>s within for each week and day of the month
-  let weekendsSeen = 0;
+  let workdaysSeen = 0;
   const bodyTrs = weeks.map((row) => {
     return (
       <tr>
@@ -89,10 +89,13 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
 
           const isWeekend = index === 0 || index === 6;
 
+          if (day !== null && !isWeekend) {
+            workdaysSeen++;
+          }
+
           // mark weekends
           if (isWeekend) {
             className += ' weekend';
-            weekendsSeen++;
           }
 
           // mark whether day is past/present/future
@@ -118,10 +121,9 @@ export function Calendar(props: {currentDate: Date, totalWorkDays: number}): JSX
           if (showPercentage) {
             // show the percentage that will have been completed by the end of the day,
             // unless it's a weekend (would be pointless)
-            const workdayNumber = Number(day) - weekendsSeen + 1;
-            const pctg = (workdayNumber/totalWorkDays) * 100;
+            const pctg = (workdaysSeen/totalWorkDays) * 100;
             const pctgRounded = roundPercentage(pctg);
-            contents = isWeekend ? '' : `${pctgRounded}%`;
+            contents = isWeekend || day === null ? '' : `${pctgRounded}%`;
             tooltip = 'The percentage that will have been completed by the end of the day';
           } else {
             // just show the vanilla day number
